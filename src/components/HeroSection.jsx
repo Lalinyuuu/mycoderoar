@@ -3,7 +3,7 @@ export default function HeroSection() {
     return (
       <section className="flex flex-col md:flex-row items-center justify-between px-8 py-16 gap-12">
         
-        {/* Left text section */}
+        
         <div className="md:w-1/3 text-center md:text-left">
           <h1 className="text-4xl font-bold mb-4">
             Stay Informed,<br />Stay Inspired
@@ -14,7 +14,7 @@ export default function HeroSection() {
           </p>
         </div>
   
-        {/* Image section */}
+        
         <div className="md:w-1/3">
           <img
             src="https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449784/my-blog-post/xgfy0xnvyemkklcqodkg.jpg"
@@ -23,7 +23,7 @@ export default function HeroSection() {
           />
         </div>
   
-        {/* Author section */}
+        
         <div className="md:w-1/3 text-center md:text-left">
           <p className="text-sm text-gray-500 mb-1">– Author</p>
           <h3 className="text-lg font-semibold mb-2">Thompson P.</h3>
