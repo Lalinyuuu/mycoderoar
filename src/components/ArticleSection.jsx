@@ -1,5 +1,7 @@
 import React from "react";
-import { Input } from "@/components/ui/input";
+import { BlogCard } from "./blogcard";
+import { blogPosts } from "../data/blogPosts";
+
 import {
   Select,
   SelectTrigger,
@@ -7,66 +9,61 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Search } from "lucide-react";
-import blogPosts from "../data/blogPosts";
-import { BlogCard } from "./BlogCard";
+
+
+const categories = ["Highlight", "Cat", "Inspiration", "General"];
 
 export default function ArticleSection() {
   return (
-    <section className="bg-[#f5f5f4] py-10 px-6">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-xl md:text-2xl font-bold mb-6">Latest articles</h2>
+    <section className="max-w-6xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Latest articles</h1>
 
-        {/* Tab + Search (ตามเดิม) */}
-        <div className="hidden md:flex items-center justify-between bg-[#f0efec] rounded-xl px-4 py-3 mb-6">
-          <div className="flex gap-6 text-sm font-medium text-gray-600">
-            <button className="bg-gray-300 text-black px-4 py-2 rounded-lg">Highlight</button>
-            <button className="hover:text-black">Cat</button>
-            <button className="hover:text-black">Inspiration</button>
-            <button className="hover:text-black">General</button>
-          </div>
-          <div className="relative w-64">
-            <Input placeholder="Search" className="pr-10" />
-            <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div>
-        </div>
-
-        {/* Mobile UI */}
-        <div className="md:hidden bg-[#f0efec] rounded-xl p-4 space-y-4 mb-6">
-          <div className="relative">
-            <Input placeholder="Search" className="pr-10" />
-            <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-600">Category</label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Highlight" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="highlight">Highlight</SelectItem>
-                <SelectItem value="cat">Cat</SelectItem>
-                <SelectItem value="inspiration">Inspiration</SelectItem>
-                <SelectItem value="general">General</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogPosts.map((post) => (
-            <BlogCard
-              key={post.id}
-              image={post.image}
-              category={post.category}
-              title={post.title}
-              description={post.description}
-              author={post.author}
-              date={post.date}
-            />
+      
+      <div className="flex justify-between items-center mb-6 w-full">
+        {/* Desktop */}
+        <div className="hidden md:flex space-x-2">
+          {categories.map((cat, index) => (
+            <button
+              key={cat}
+              className={`px-4 py-3 transition-colors rounded-sm text-sm text-muted-foreground font-medium ${
+                index === 0 ? "bg-[#DAD6D1]" : "bg-muted"
+              }`}
+            >
+              {cat}
+            </button>
           ))}
         </div>
+
+        
+        <div className="md:hidden w-full">
+          <Select defaultValue="Highlight">
+            <SelectTrigger className="w-full py-3 rounded-sm text-muted-foreground">
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((cat) => (
+                <SelectItem key={cat} value={cat}>
+                  {cat}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+     
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {blogPosts.map((post) => (
+          <BlogCard
+            key={post.id}
+            image={post.image}
+            category={post.category}
+            title={post.title}
+            description={post.description}
+            author={post.author}
+            date={post.date}
+          />
+        ))}
       </div>
     </section>
   );
