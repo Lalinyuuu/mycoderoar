@@ -17,7 +17,7 @@ function ActionBar({ url, likes = 0, onLike, onCopy }) {
 
   return (
     <div className="flex items-center justify-between gap-3 bg-[#f3f2ef] px-4 py-3 rounded-2xl">
-      {/* Like pill (ซ้าย) */}
+     
       <button
         onClick={onLike}
         className="px-5 py-3 rounded-full border flex items-center gap-2"
@@ -25,7 +25,7 @@ function ActionBar({ url, likes = 0, onLike, onCopy }) {
         <span>🙂</span> {likes}
       </button>
 
-      {/* Copy + Social (ขวา) */}
+     
       <div className="flex items-center gap-3">
         <button onClick={onCopy} className="px-5 py-3 rounded-full border flex items-center gap-2">
           <span>📋</span> Copy link
