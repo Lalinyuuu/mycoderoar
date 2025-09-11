@@ -1,6 +1,3 @@
-// src/lib/utils.js
-import { clsx } from "clsx";
-
-export function cn(...inputs) {
-  return clsx(...inputs);
-}
+export function cn(...classes) {
+    return classes.filter(Boolean).join(' ');
+  }
