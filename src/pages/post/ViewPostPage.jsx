@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { usePostData } from "@/hooks";
 import { CommentSection, ReadingProgressBar, RelatedPosts, PostHeader, PostContent, PostInteractions, PostMeta } from "@/components";
+import LoadingPoring from "@/components/loading/LoadingPoring";
 
 export default function ViewPostPage() {
   const { postId } = useParams();
@@ -32,7 +33,9 @@ export default function ViewPostPage() {
     return (
       <div className="mx-auto max-w-[1440px] p-6 gray-10">
         <div className="flex items-center justify-center py-20">
-          <p className="text-gray-6">Loading...</p>
+          <div className="scale-150">
+            <LoadingPoring fullscreen={false} text="Loading Post..." />
+          </div>
         </div>
       </div>
     );
