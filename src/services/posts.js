@@ -123,6 +123,11 @@ export async function getPostComments(postId) {
     const { data } = await api.get(`/api/posts/${postId}/comments`);
     return data;
   } catch (error) {
+    // If server returns 500, return empty comments instead of failing
+    if (error.response?.status === 500) {
+      return { success: true, data: { comments: [] } };
+    }
+    // For other errors, return empty comments array
     return { success: false, data: { comments: [] } };
   }
 }

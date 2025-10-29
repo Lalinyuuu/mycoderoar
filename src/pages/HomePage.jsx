@@ -1,11 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HeroSection, FollowFeed } from "@/components";
 import ArticleSection from "@/feature/posts/containers/ArticleSection";
 import { useAuth } from "@/contexts";
+import { getFollowStats } from "@/api_services/followStatsService";
 
 export default function HomePage() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('all');
+  const [followingCount, setFollowingCount] = useState(null);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  // Check following count when user changes
+  useEffect(() => {
+    const checkFollowingCount = async () => {
+      if (!user?.id) {
+        setFollowingCount(0);
+        setLoadingStats(false);
+        return;
+      }
+
+      try {
+        const result = await getFollowStats(user.id);
+        if (result.success && result.data) {
+          setFollowingCount(result.data.followingCount || 0);
+        } else {
+          setFollowingCount(0);
+        }
+      } catch (error) {
+        setFollowingCount(0);
+      } finally {
+        setLoadingStats(false);
+      }
+    };
+
+    checkFollowingCount();
+  }, [user?.id]);
+
+  // No need to redirect - let FollowFeed handle empty state with suggestions
 
   return (
     <div className="w-full">
