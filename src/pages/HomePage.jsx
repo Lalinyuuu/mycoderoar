@@ -52,7 +52,7 @@ export default function HomePage() {
                   onClick={() => setActiveTab('all')}
                   className={`relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out group ${
                     activeTab === 'all'
-                      ? 'bg-gradient-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
+                      ? 'bg-linear-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
                       : 'text-purple-7 hover:text-purple-8 hover:bg-purple-1'
                   }`}
                 >
@@ -63,14 +63,14 @@ export default function HomePage() {
                     All Posts
                   </span>
                   {activeTab === 'all' && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
                   )}
                 </button>
                 <button
                   onClick={() => setActiveTab('feed')}
                   className={`relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out group ${
                     activeTab === 'feed'
-                      ? 'bg-gradient-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
+                      ? 'bg-linear-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
                       : 'text-purple-7 hover:text-purple-8 hover:bg-purple-1'
                   }`}
                 >
@@ -81,7 +81,7 @@ export default function HomePage() {
                     Your Feed
                   </span>
                   {activeTab === 'feed' && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
                   )}
                 </button>
               </div>
