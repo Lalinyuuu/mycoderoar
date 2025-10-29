@@ -3,7 +3,7 @@
  * List of posts by the user
  */
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import BlogCard from '@/components/cards/BlogCard';
 import LoadingPoring from '@/components/loading/LoadingPoring';
 import Select from '@/components/ui/Select';

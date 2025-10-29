@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { reportError } from "./utils/sentry";

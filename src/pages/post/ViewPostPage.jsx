@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { usePostData } from "@/hooks";
 import { CommentSection, ReadingProgressBar, RelatedPosts, PostHeader, PostContent, PostInteractions, PostMeta } from "@/components";
