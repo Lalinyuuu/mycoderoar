@@ -88,8 +88,7 @@ const uploadWithFormData = async (file, type, options = {}) => {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+        'Pragma': 'no-cache'
         // Authorization header is added automatically by apiClient interceptor
       },
       timeout: 30000, // 30 seconds timeout
@@ -125,8 +124,7 @@ const uploadWithFormData = async (file, type, options = {}) => {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache',
-            'Expires': '0'
+            'Pragma': 'no-cache'
             // Authorization header is added automatically by apiClient interceptor
           },
           timeout: 30000,
@@ -190,8 +188,7 @@ const uploadWithBase64 = async (file, type, options = {}) => {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+        'Pragma': 'no-cache'
         // Authorization header is added automatically by apiClient interceptor
       }
     });
@@ -244,8 +241,7 @@ const uploadSimple = async (file, type, options = {}) => {
     const response = await apiClient.post(fullEndpoint, formData, {
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+        'Pragma': 'no-cache'
       }
     });
 
