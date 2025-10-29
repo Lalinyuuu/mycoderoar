@@ -17,9 +17,9 @@ export default function ResetPasswordPage() {
   const handleChange = (field) => (e) => {
     let value = e.target.value;
     
-    // Limit password fields to 10 characters
+    // Limit password fields to 50 characters
     if (field === 'newPassword' || field === 'confirmPassword') {
-      value = value.slice(0, 10);
+      value = value.slice(0, 50);
     }
     
     setFormData({ ...formData, [field]: value });
@@ -100,8 +100,8 @@ export default function ResetPasswordPage() {
               size="lg"
               error={errors.newPassword}
               placeholder="••••••••"
-              maxLength={10}
-              helperText="Maximum 10 characters"
+              maxLength={50}
+              helperText="Maximum 50 characters"
             />
           </div>
 
@@ -115,7 +115,7 @@ export default function ResetPasswordPage() {
               size="lg"
               error={errors.confirmPassword}
               placeholder="••••••••"
-              maxLength={10}
+              maxLength={50}
             />
           </div>
 

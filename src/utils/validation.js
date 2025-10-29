@@ -20,8 +20,8 @@ export const validatePassword = (password) => {
     errors.push("Password must be at least 8 characters");
   }
   
-  if (password.length > 10) {
-    errors.push("Password must not exceed 10 characters");
+  if (password.length > 50) {
+    errors.push("Password must not exceed 50 characters");
   }
   
   if (!/(?=.*[a-z])/.test(password)) {
