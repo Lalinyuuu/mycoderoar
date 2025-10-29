@@ -30,16 +30,12 @@ export const useFollowFeed = (options = {}) => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [availableTags, setAvailableTags] = useState([]);
 
-  // Debounced fetch function
-  const debouncedFetch = useCallback(
-    debounce(async (params) => {
-      await fetchFeed(params);
-    }, 300),
-    [fetchFeed]
-  );
-
   // Main fetch function - memoized to prevent infinite loops
   const fetchFeed = useCallback(async (params = {}) => {
+    // Prevent multiple simultaneous requests
+    if (isLoading) return;
+    
+    
     try {
       setIsLoading(true);
       setError(null);
@@ -53,7 +49,6 @@ export const useFollowFeed = (options = {}) => {
         ...params
       };
 
-      
       // Add timeout protection
       const timeoutPromise = new Promise((_, reject) => 
         setTimeout(() => reject(new Error('Follow feed timeout')), 10000)
@@ -64,7 +59,6 @@ export const useFollowFeed = (options = {}) => {
       if (result.success) {
         const postsData = extractPostsData(result);
         const paginationData = extractPaginationData(result);
-        
         
         setPosts(postsData);
         setPagination(paginationData);
@@ -100,10 +94,17 @@ export const useFollowFeed = (options = {}) => {
         });
       }
     } finally {
-      // Remove delay to prevent hanging
       setIsLoading(false);
     }
   }, [currentPage, limit, activeFilter, activeSort, selectedTags, onSuccess, onError]);
+
+  // Debounced fetch function
+  const debouncedFetch = useCallback(
+    debounce(async (params) => {
+      await fetchFeed(params);
+    }, 300),
+    [fetchFeed]
+  );
 
   // Load more posts
   const loadMore = useCallback(() => {
@@ -160,9 +161,11 @@ export const useFollowFeed = (options = {}) => {
 
   // Check if there are active filters
   const hasActiveFilters = activeFilter !== 'all' || activeSort !== 'newest' || selectedTags.length > 0;
+  
 
   // Check if feed is empty
   const isEmpty = posts.length === 0 && !isLoading && !error;
+  
 
   // Check if can load more
   const canLoadMore = pagination && currentPage < pagination.totalPages && !isLoading;
@@ -178,11 +181,9 @@ export const useFollowFeed = (options = {}) => {
       return;
     }
     
-    // Only fetch if not already loading
-    if (!isLoading) {
-      fetchFeed();
-    }
-  }, [currentPage, activeFilter, activeSort, selectedTags, limit]);
+    // Fetch data when dependencies change
+    fetchFeed();
+  }, [currentPage, activeFilter, activeSort, selectedTags, limit, fetchFeed]);
 
   return {
     // Data

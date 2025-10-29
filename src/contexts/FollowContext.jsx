@@ -100,8 +100,12 @@ export function FollowProvider({ children }) {
   }, [user]);
 
   const getFollowStatus = useCallback((userId) => {
-    const status = followStatuses[userId] || false;
-    return status;
+    // Return undefined if the status has not been cached yet.
+    // Do NOT coerce to false, otherwise components will think
+    // the user is not following while the real status is unknown.
+    return Object.prototype.hasOwnProperty.call(followStatuses, userId)
+      ? followStatuses[userId]
+      : undefined;
   }, [followStatuses]);
 
   const isLoading = useCallback((userId) => {

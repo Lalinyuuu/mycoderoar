@@ -21,6 +21,7 @@ export const getFollowFeed = async (options = {}) => {
     search = ''
   } = options;
   
+  
   // Check if user is authenticated
   const token = localStorage.getItem('token');
   if (!token) {
@@ -44,6 +45,7 @@ export const getFollowFeed = async (options = {}) => {
   if (search) params.search = search;
   
   try {
+    
     const result = await handleApiCall(
       () => api.get('/api/follow/feed', {
         params,
@@ -57,11 +59,41 @@ export const getFollowFeed = async (options = {}) => {
       }
     );
 
+
     if (result.success) {
-      return result;
+      // Check if we have actual data
+      if (result.data && (result.data.posts || result.data.data)) {
+        return result;
+      } else {
+        // API succeeded but no data, use fallback
+      }
     }
 
-    // Fallback: return empty feed if endpoint doesn't exist
+    // Fallback: try regular posts API
+    
+    try {
+      const fallbackResult = await handleApiCall(
+        () => api.get('/api/posts', {
+          params: { page, limit, status: 'published' }
+        }),
+        {
+          showErrorToast: false,
+          fallbackMessage: 'Failed to load posts'
+        }
+      );
+
+
+      if (fallbackResult.success) {
+        return {
+          success: true,
+          data: fallbackResult.data,
+          isFallback: true
+        };
+      }
+    } catch (fallbackError) {
+    }
+
+    // Final fallback: return empty feed
     return {
       success: true,
       data: {
@@ -76,29 +108,8 @@ export const getFollowFeed = async (options = {}) => {
       isFallback: true
     };
   } catch (error) {
-    // Fallback: use regular posts API
-    try {
-      const fallbackResult = await handleApiCall(
-        () => api.get('/api/posts', {
-          params: { page, limit, status: 'published' }
-        }),
-        {
-          showErrorToast: false,
-          fallbackMessage: 'Failed to load posts'
-        }
-      );
-
-      if (fallbackResult.success) {
-        return {
-          success: true,
-          data: fallbackResult.data,
-          isFallback: true
-        };
-      }
-    } catch (fallbackError) {
-      // Fallback failed, continue with empty response
-    }
-
+    
+    // Return empty feed on error
     return {
       success: true,
       data: {

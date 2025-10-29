@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { HeroSection, FollowFeed } from "@/components";
 import ArticleSection from "@/feature/posts/containers/ArticleSection";
 import { useAuth } from "@/contexts";
@@ -6,9 +7,18 @@ import { getFollowStats } from "@/api_services/followStatsService";
 
 export default function HomePage() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'all');
   const [followingCount, setFollowingCount] = useState(null);
   const [loadingStats, setLoadingStats] = useState(true);
+
+  // Sync URL parameter with activeTab
+  useEffect(() => {
+    const tabFromUrl = searchParams.get('tab');
+    if (tabFromUrl && tabFromUrl !== activeTab) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [searchParams, activeTab]);
 
   // Check following count when user changes
   useEffect(() => {
@@ -49,7 +59,10 @@ export default function HomePage() {
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-2 shadow-lg border border-purple-1">
               <div className="flex gap-1">
                 <button
-                  onClick={() => setActiveTab('all')}
+                  onClick={() => {
+                    setActiveTab('all');
+                    setSearchParams({ tab: 'all' });
+                  }}
                   className={`relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out group ${
                     activeTab === 'all'
                       ? 'bg-linear-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
@@ -67,7 +80,10 @@ export default function HomePage() {
                   )}
                 </button>
                 <button
-                  onClick={() => setActiveTab('feed')}
+                  onClick={() => {
+                    setActiveTab('feed');
+                    setSearchParams({ tab: 'feed' });
+                  }}
                   className={`relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out group ${
                     activeTab === 'feed'
                       ? 'bg-linear-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
@@ -93,7 +109,14 @@ export default function HomePage() {
       {/* Content */}
       {user && activeTab === 'feed' ? (
         <FollowFeed 
-          onSwitchToAllPosts={() => setActiveTab('all')}
+          onSwitchToAllPosts={() => {
+            setActiveTab('all');
+            setSearchParams({ tab: 'all' });
+          }}
+          onRefresh={() => {
+            // Force refresh the follow feed
+            window.location.reload();
+          }}
         />
       ) : (
         <ArticleSection />

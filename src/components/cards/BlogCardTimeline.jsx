@@ -104,8 +104,30 @@ const BlogCardTimeline = ({
       }
 
       if (result.success) {
-        setIsFollowing(!isFollowing);
-        toast.success(isFollowing ? 'Unfollowed successfully' : 'Followed successfully');
+        const newFollowStatus = !isFollowing;
+        setIsFollowing(newFollowStatus);
+        
+        // Update global follow status
+        updateFollowStatus(authorId, newFollowStatus);
+        
+        // Show success message
+        toast.success(newFollowStatus ? 'Followed successfully' : 'Unfollowed successfully');
+        
+        // If unfollowed, check if we're in FollowFeed context and trigger refresh
+        if (!newFollowStatus) {
+          const followFeedElement = document.querySelector('.follow-feed');
+          const isPostPage = window.location.pathname.includes('/post/');
+          const isUserPage = window.location.pathname.includes('/users/');
+          const isInFollowFeed = followFeedElement && !isPostPage && !isUserPage;
+          
+          
+          if (isInFollowFeed) {
+            // Trigger refresh by reloading the page
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
+        }
       } else {
         toast.error(result.error || 'Failed to update follow status');
       }
@@ -164,7 +186,7 @@ const BlogCardTimeline = ({
         {/* Image */}
         {src && src !== '' && src !== 'undefined' && src !== 'null' && (
           <div onClick={onPostNavigation} className="block cursor-pointer">
-            <div className="relative w-full aspect-[4/3] overflow-hidden">
+            <div className="relative w-full aspect-4/3 overflow-hidden">
                       <img
                         src={src}
                         alt={title}
@@ -172,7 +194,7 @@ const BlogCardTimeline = ({
                         className="w-full h-full object-contain object-center"
                         onError={onError}
                       />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           </div>
         )}

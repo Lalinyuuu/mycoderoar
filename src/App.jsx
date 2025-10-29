@@ -33,7 +33,7 @@ const AdminNotifications = lazy(() => import("@/pages/admin/AdminNotifications")
 const AdminResetPassword = lazy(() => import("@/pages/admin/AdminResetPassword"));
 const AdminUsers = lazy(() => import("@/pages/admin/AdminUsers"));
 const AdminStatistics = lazy(() => import("@/pages/admin/AdminStatistics"));
-import { ErrorBoundary } from "@/components";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
 
 
 function RootLayout() {

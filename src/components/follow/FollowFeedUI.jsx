@@ -65,6 +65,7 @@ const FollowFeedUI = ({
     }
   };
 
+
   // Loading state
   if (isLoading && posts.length === 0) {
     return (
@@ -484,8 +485,8 @@ const EmptyNoFollows = ({ onSwitchToAllPosts, onRefresh }) => (
         <div className="mt-12">
           <UserSuggestions 
             limit={5}
-            onUserFollowed={(userId) => {
-              // Refresh feed when user is followed
+            onUserFollowed={(userId, shouldRefresh = false) => {
+              // Refresh feed when user is followed or unfollowed
               if (onRefresh) onRefresh();
             }}
           />

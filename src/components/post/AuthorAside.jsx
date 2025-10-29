@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import FollowButton from '@/components/follow/FollowButton';
 import FollowStats from '@/components/follow/FollowStats';
+import { useFollow } from '@/contexts/FollowContext';
 
 export default function AuthorAside({ author }) {
   const navigate = useNavigate();
+  const { getFollowStatus } = useFollow();
   
   
   const authorData = typeof author === 'string' 
@@ -28,7 +30,7 @@ export default function AuthorAside({ author }) {
   };
 
   return (
-    <aside className="bg-gradient-to-br from-light-2 to-light-1 p-6 rounded-xl border-2 border-purple-3 shadow-lg">
+    <aside className="bg-linear-to-br from-light-2 to-light-1 p-6 rounded-xl border-2 border-purple-3 shadow-lg">
       <p className="text-sm text-gray-6 mb-2 font-medium">Author</p>
       
       <div className="flex items-center gap-4 mb-4">
@@ -70,9 +72,10 @@ export default function AuthorAside({ author }) {
         <div className="flex justify-center mb-4">
           <FollowButton
             userId={authorData.id}
+            initialIsFollowing={getFollowStatus(authorData.id) || authorData.isFollowing}
             size="sm"
             showIcon={true}
-            className="!bg-purple-6 !text-white hover:!bg-purple-7"
+            className="bg-purple-6! text-white! hover:bg-purple-7!"
           />
         </div>
       )}
