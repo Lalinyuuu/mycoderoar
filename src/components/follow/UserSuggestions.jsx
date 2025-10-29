@@ -34,6 +34,7 @@ const UserSuggestions = ({ limit = 5, onUserFollowed = null }) => {
         setError(result.error);
       }
     } catch (error) {
+      console.error('Failed to fetch suggested users:', error);
       setError('Failed to load suggestions');
     } finally {
       setIsLoading(false);
@@ -86,7 +87,7 @@ const UserSuggestions = ({ limit = 5, onUserFollowed = null }) => {
               <div className="flex items-center gap-2">
                 <h4 className="font-semibold gray-9 truncate">{user.name}</h4>
                 {user.isVerified && (
-                  <svg className="w-4 h-4 purple-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 purple-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                   </svg>
                 )}
@@ -99,7 +100,7 @@ const UserSuggestions = ({ limit = 5, onUserFollowed = null }) => {
               </div>
             </div>
             
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <FollowButton
                 userId={user.id}
                 size="sm"
