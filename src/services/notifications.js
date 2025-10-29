@@ -13,7 +13,7 @@ export const fetchNotifications = async (params = {}, retryCount = 0) => {
   try {
     // Pre-check connection for first attempt only
     if (retryCount === 0) {
-      const connectionCheck = await preUploadCheck(import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000');
+      const connectionCheck = await preUploadCheck(import.meta.env.VITE_API_BASE_URL || 'https://blog-api-tau-sand.vercel.app');
       
       if (!connectionCheck.shouldProceed) {
         throw new Error('Connection check failed - Backend server is not responding');
@@ -70,7 +70,7 @@ export const deleteNotification = async (notificationId) => {
 export const getNotificationCount = async () => {
   try {
     // Quick connection check
-    const connectionCheck = await preUploadCheck(import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000');
+    const connectionCheck = await preUploadCheck(import.meta.env.VITE_API_BASE_URL || 'https://blog-api-tau-sand.vercel.app');
     
     if (!connectionCheck.shouldProceed) {
       return 0;

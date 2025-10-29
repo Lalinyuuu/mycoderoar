@@ -6,7 +6,7 @@
 import axios from 'axios';
 
 // Base configuration
-const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || 'http://localhost:3000';
+const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || 'https://blog-api-tau-sand.vercel.app';
 
 
 // Create centralized axios instance

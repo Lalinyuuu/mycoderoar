@@ -71,7 +71,7 @@ const AvatarUpload = ({
       setUploadError(null);
 
       // Run pre-upload connection check
-      const connectionCheck = await preUploadCheck(import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000');
+      const connectionCheck = await preUploadCheck(import.meta.env.VITE_API_BASE_URL || 'https://blog-api-tau-sand.vercel.app');
       
       if (!connectionCheck.shouldProceed) {
         const errorMsg = connectionCheck.backendReachable 

@@ -72,7 +72,7 @@ export const checkUploadEndpoint = async (baseUrl, endpoint = '/health', timeout
  * @param {string} apiBaseUrl - API base URL
  * @returns {Promise<Object>} Connection quality info
  */
-export const checkConnectionQuality = async (apiBaseUrl = 'http://localhost:3000') => {
+export const checkConnectionQuality = async (apiBaseUrl = 'https://blog-api-tau-sand.vercel.app') => {
   const startTime = performance.now();
   
   try {
