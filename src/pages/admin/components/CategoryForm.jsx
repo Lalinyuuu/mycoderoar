@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { X, Save, Plus } from 'lucide-react';
-import Input from '@/components/ui/Input';
+import Input from '@/components/ui/input';
 import Textarea from '@/components/ui/Textarea';
 import Button from '@/components/ui/Button';
 

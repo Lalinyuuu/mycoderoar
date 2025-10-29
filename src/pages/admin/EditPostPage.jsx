@@ -14,7 +14,7 @@ import { parseTagsFromString } from "@/constants/tags";
 import LoadingPoring from "@/components/loading/LoadingPoring";
 import DeleteConfirmModal from '@/components/ui/DeleteConfirmModal.jsx';
 import Button from '@/components/ui/Button';
-import Select from '@/components/ui/Select';
+import Select from '@/components/ui/select';
 import { Save, Eye, Trash2 } from 'lucide-react';
 
 export default function EditPostPage() {

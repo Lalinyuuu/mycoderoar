@@ -5,7 +5,7 @@ import api from '@/services/api';
 import { toast } from 'sonner';
 import AvatarUpload from '@/components/upload/AvatarUpload';
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
+import Input from '@/components/ui/input';
 
 export default function ProfilePage() {
   const { user, updateUser } = useAuth();
