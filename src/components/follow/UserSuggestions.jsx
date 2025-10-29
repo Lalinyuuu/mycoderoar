@@ -41,11 +41,16 @@ const UserSuggestions = ({ limit = 5, onUserFollowed = null }) => {
     }
   };
 
-  const handleUserFollowed = (userId) => {
+  const handleUserFollowed = (userId, shouldRefresh = false) => {
     if (onUserFollowed) {
-      onUserFollowed(userId);
+      onUserFollowed(userId, shouldRefresh);
     }
-    toast.success('Started following user!');
+    // Only show toast for follow, not unfollow
+    if (shouldRefresh) {
+      toast.success('Successfully unfollowed user!');
+    } else {
+      toast.success('Started following user!');
+    }
   };
 
   // Hide loading state completely - will show nothing or content when ready
@@ -104,7 +109,7 @@ const UserSuggestions = ({ limit = 5, onUserFollowed = null }) => {
               <FollowButton
                 userId={user.id}
                 size="sm"
-                onFollowChange={() => handleUserFollowed(user.id)}
+                onFollowChange={(isFollowing, shouldRefresh) => handleUserFollowed(user.id, shouldRefresh)}
               />
             </div>
           </div>

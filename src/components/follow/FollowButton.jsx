@@ -27,6 +27,7 @@ const FollowButton = ({
   // Get cached follow status from context
   const cachedFollowStatus = getFollowStatus(userId);
   const [isFollowing, setIsFollowing] = useState(cachedFollowStatus !== undefined ? cachedFollowStatus : initialIsFollowing);
+  
   const [isLoading, setIsLoading] = useState(false);
   const lastClickTime = useRef(0);
 
@@ -116,6 +117,23 @@ const FollowButton = ({
           // Don't show toast for "Already following" cases
         } else {
           toast.success(newFollowStatus ? 'Successfully followed!' : 'Successfully unfollowed!');
+        }
+
+        // If unfollowed, trigger refresh callback for FollowFeed context
+        if (!newFollowStatus) {
+          // Check if we're in FollowFeed by looking for specific elements and URL
+          const followFeedElement = document.querySelector('.follow-feed');
+          const isPostPage = window.location.pathname.includes('/post/');
+          const isUserPage = window.location.pathname.includes('/users/');
+          const isInFollowFeed = followFeedElement && !isPostPage && !isUserPage;
+          
+          
+          if (isInFollowFeed) {
+            // Trigger refresh callback instead of page reload
+            if (onFollowChange) {
+              onFollowChange(newFollowStatus, true); // Pass true to indicate refresh needed
+            }
+          }
         }
       } else {
         toast.error(result.error || 'Failed to update follow status');
