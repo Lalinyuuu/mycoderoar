@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import api from "@/services/api";
 import { validatePasswordResetForm } from "@/utils/validation";
 import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+import Input from "@/components/ui/input";
 
 export default function ResetPasswordPage() {
   const [formData, setFormData] = useState({
