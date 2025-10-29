@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { getFollowFeed } from '@/api_services/follow';
+import { getFollowFeed } from '@/api_services/followFeedService';
 import { extractPostsData, extractPaginationData, debounce } from '@/utils/apiHelpers';
 import { handleError } from '@/utils/errorHandling';
 import { extractUniqueTags } from '@/utils/dataTransformers';
@@ -35,7 +35,7 @@ export const useFollowFeed = (options = {}) => {
     debounce(async (params) => {
       await fetchFeed(params);
     }, 300),
-    []
+    [fetchFeed]
   );
 
   // Main fetch function - memoized to prevent infinite loops
@@ -182,7 +182,7 @@ export const useFollowFeed = (options = {}) => {
     if (!isLoading) {
       fetchFeed();
     }
-  }, [fetchFeed, isLoading]);
+  }, [currentPage, activeFilter, activeSort, selectedTags, limit]);
 
   return {
     // Data

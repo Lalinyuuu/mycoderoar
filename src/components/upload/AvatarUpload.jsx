@@ -252,7 +252,7 @@ const AvatarUpload = ({
                 </div>
                 <div className="w-full bg-gray-2 dark:bg-gray-7 rounded-full h-2 progress-bar-loading">
                   <div 
-                    className="bg-gradient-to-r from-purple-5 to-purple-6 h-2 rounded-full progress-bar-fill"
+                    className="bg-linear-to-r from-purple-5 to-purple-6 h-2 rounded-full progress-bar-fill"
                     style={{ 
                       width: `${uploadProgress}%`
                     }}
@@ -288,7 +288,7 @@ const AvatarUpload = ({
                 </div>
                 <div className="w-full bg-gray-2 dark:bg-gray-7 rounded-full h-2 progress-bar-loading">
                   <div 
-                    className="bg-gradient-to-r from-purple-5 to-purple-6 h-2 rounded-full progress-bar-fill"
+                    className="bg-linear-to-r from-purple-5 to-purple-6 h-2 rounded-full progress-bar-fill"
                     style={{ 
                       width: `${uploadProgress}%`
                     }}

@@ -25,7 +25,8 @@ export const getFollowFeed = async (options = {}) => {
   const token = localStorage.getItem('token');
   if (!token) {
     return {
-      success: true,
+      success: false,
+      error: 'Authentication required',
       data: {
         posts: [],
         pagination: {
@@ -34,9 +35,7 @@ export const getFollowFeed = async (options = {}) => {
           total: 0,
           totalPages: 0
         }
-      },
-      isFallback: true,
-      message: 'Please sign in to see your personalized feed'
+      }
     };
   }
   
