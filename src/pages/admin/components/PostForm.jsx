@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/Button';
-import Select from '@/components/ui/select';
+import Select from '@/components/ui/Select';
 import Textarea from '@/components/ui/Textarea';
 import PostImageUpload from '@/components/upload/PostImageUpload';
 import TagsDropdown from '@/components/ui/TagsDropdown';
