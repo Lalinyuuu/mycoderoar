@@ -1,11 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HeroSection, FollowFeed } from "@/components";
 import ArticleSection from "@/feature/posts/containers/ArticleSection";
 import { useAuth } from "@/contexts";
+import { getFollowStats } from "@/api_services/followStatsService";
 
 export default function HomePage() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('all');
+  const [followingCount, setFollowingCount] = useState(null);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  // Check following count when user changes
+  useEffect(() => {
+    const checkFollowingCount = async () => {
+      if (!user?.id) {
+        setFollowingCount(0);
+        setLoadingStats(false);
+        return;
+      }
+
+      try {
+        const result = await getFollowStats(user.id);
+        if (result.success && result.data) {
+          setFollowingCount(result.data.followingCount || 0);
+        } else {
+          setFollowingCount(0);
+        }
+      } catch (error) {
+        setFollowingCount(0);
+      } finally {
+        setLoadingStats(false);
+      }
+    };
+
+    checkFollowingCount();
+  }, [user?.id]);
+
+  // No need to redirect - let FollowFeed handle empty state with suggestions
 
   return (
     <div className="w-full">
@@ -21,7 +52,7 @@ export default function HomePage() {
                   onClick={() => setActiveTab('all')}
                   className={`relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out group ${
                     activeTab === 'all'
-                      ? 'bg-gradient-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
+                      ? 'bg-linear-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
                       : 'text-purple-7 hover:text-purple-8 hover:bg-purple-1'
                   }`}
                 >
@@ -32,14 +63,14 @@ export default function HomePage() {
                     All Posts
                   </span>
                   {activeTab === 'all' && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
                   )}
                 </button>
                 <button
                   onClick={() => setActiveTab('feed')}
                   className={`relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 ease-out group ${
                     activeTab === 'feed'
-                      ? 'bg-gradient-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
+                      ? 'bg-linear-to-r from-purple-6 to-purple-5 text-white shadow-lg transform scale-105'
                       : 'text-purple-7 hover:text-purple-8 hover:bg-purple-1'
                   }`}
                 >
@@ -50,7 +81,7 @@ export default function HomePage() {
                     Your Feed
                   </span>
                   {activeTab === 'feed' && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-4 to-blue-4 rounded-xl blur opacity-30"></div>
                   )}
                 </button>
               </div>
