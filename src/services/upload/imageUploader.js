@@ -79,9 +79,12 @@ const uploadWithFormData = async (file, type, options = {}) => {
   // Choose correct endpoint based on type
   const endpoint = type === UPLOAD_TYPES.AVATAR ? '/api/upload/avatar' : '/api/upload/post';
   
+  // Add cache-busting parameter to avoid CORS cache issues
+  const cacheBuster = `?t=${Date.now()}`;
+  const fullEndpoint = endpoint + cacheBuster;
   
   try {
-    const response = await apiClient.post(endpoint, formData, {
+    const response = await apiClient.post(fullEndpoint, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
         // Authorization header is added automatically by apiClient interceptor
@@ -112,9 +115,10 @@ const uploadWithFormData = async (file, type, options = {}) => {
     // Fallback to alternative endpoint if specific endpoint fails
     if (error.response?.status === 404) {
       const fallbackEndpoint = type === UPLOAD_TYPES.AVATAR ? '/api/upload/post' : '/api/upload/avatar';
+      const fallbackFullEndpoint = fallbackEndpoint + cacheBuster;
       
       try {
-        const fallbackResponse = await apiClient.post(fallbackEndpoint, formData, {
+        const fallbackResponse = await apiClient.post(fallbackFullEndpoint, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
             // Authorization header is added automatically by apiClient interceptor
@@ -167,8 +171,12 @@ const uploadWithBase64 = async (file, type, options = {}) => {
   // Choose correct endpoint based on type
   const endpoint = type === UPLOAD_TYPES.AVATAR ? '/api/upload/avatar' : '/api/upload/post';
   
+  // Add cache-busting parameter to avoid CORS cache issues
+  const cacheBuster = `?t=${Date.now()}`;
+  const fullEndpoint = endpoint + cacheBuster;
+  
   try {
-    const response = await apiClient.post(endpoint, {
+    const response = await apiClient.post(fullEndpoint, {
       file: base64,
       uploadType: type, // Changed from 'type' to 'uploadType'
       folder: options.folder
@@ -219,8 +227,12 @@ const uploadSimple = async (file, type, options = {}) => {
   // Choose correct endpoint based on type
   const endpoint = type === UPLOAD_TYPES.AVATAR ? '/api/upload/avatar' : '/api/upload/post';
   
+  // Add cache-busting parameter to avoid CORS cache issues
+  const cacheBuster = `?t=${Date.now()}`;
+  const fullEndpoint = endpoint + cacheBuster;
+  
   try {
-    const response = await apiClient.post(endpoint, formData);
+    const response = await apiClient.post(fullEndpoint, formData);
 
     return {
       success: true,
