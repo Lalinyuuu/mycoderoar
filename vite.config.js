@@ -7,14 +7,11 @@ import { fileURLToPath, URL } from 'node:url'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react({
-    jsxRuntime: 'automatic',
-    jsxImportSource: 'react'
+    jsxRuntime: 'automatic'
   }), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(path.dirname(fileURLToPath(import.meta.url)), "./src"),
-      "react": path.resolve(path.dirname(fileURLToPath(import.meta.url)), "./node_modules/react"),
-      "react-dom": path.resolve(path.dirname(fileURLToPath(import.meta.url)), "./node_modules/react-dom"),
     },
   },
   build: {
@@ -68,4 +65,7 @@ export default defineConfig({
   esbuild: {
     drop: ['console', 'debugger'],
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom']
+  }
 })
