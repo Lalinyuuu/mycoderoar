@@ -80,13 +80,15 @@ const uploadWithFormData = async (file, type, options = {}) => {
   const endpoint = type === UPLOAD_TYPES.AVATAR ? '/api/upload/avatar' : '/api/upload/post';
   
   // Add cache-busting parameter to avoid CORS cache issues
-  const cacheBuster = `?t=${Date.now()}`;
+  const cacheBuster = `?t=${Date.now()}&v=${Math.random()}`;
   const fullEndpoint = endpoint + cacheBuster;
   
   try {
     const response = await apiClient.post(fullEndpoint, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
         // Authorization header is added automatically by apiClient interceptor
       },
       timeout: 30000, // 30 seconds timeout
@@ -120,7 +122,9 @@ const uploadWithFormData = async (file, type, options = {}) => {
       try {
         const fallbackResponse = await apiClient.post(fallbackFullEndpoint, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
             // Authorization header is added automatically by apiClient interceptor
           },
           timeout: 30000,
@@ -172,7 +176,7 @@ const uploadWithBase64 = async (file, type, options = {}) => {
   const endpoint = type === UPLOAD_TYPES.AVATAR ? '/api/upload/avatar' : '/api/upload/post';
   
   // Add cache-busting parameter to avoid CORS cache issues
-  const cacheBuster = `?t=${Date.now()}`;
+  const cacheBuster = `?t=${Date.now()}&v=${Math.random()}`;
   const fullEndpoint = endpoint + cacheBuster;
   
   try {
@@ -182,7 +186,9 @@ const uploadWithBase64 = async (file, type, options = {}) => {
       folder: options.folder
     }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
         // Authorization header is added automatically by apiClient interceptor
       }
     });
@@ -228,11 +234,16 @@ const uploadSimple = async (file, type, options = {}) => {
   const endpoint = type === UPLOAD_TYPES.AVATAR ? '/api/upload/avatar' : '/api/upload/post';
   
   // Add cache-busting parameter to avoid CORS cache issues
-  const cacheBuster = `?t=${Date.now()}`;
+  const cacheBuster = `?t=${Date.now()}&v=${Math.random()}`;
   const fullEndpoint = endpoint + cacheBuster;
   
   try {
-    const response = await apiClient.post(fullEndpoint, formData);
+    const response = await apiClient.post(fullEndpoint, formData, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
 
     return {
       success: true,
