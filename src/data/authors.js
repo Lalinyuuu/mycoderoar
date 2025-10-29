@@ -1,20 +1,28 @@
 export const AUTHORS = {
-  thompson: {
-    id: "thompson",
-    name: "Thompson P.",
-    avatar:
-      "https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449784/my-blog-post/xgfy0xnvyemkklcqodkg.jpg",
-    bio1:
-      "I am a pet enthusiast and freelance writer who specializes in animal behavior and care. With a deep love for cats, I enjoy sharing insights on feline companionship and wellness.",
-    bio2:
-      "When i’m not writing, I spends time volunteering at my local animal shelter, helping cats find loving homes.",
-  },
-};
-
-export const DEFAULT_AUTHOR = AUTHORS.thompson;
-
-export function getAuthorById(id) {
-  if (!id) return null;
-  const key = String(id).toLowerCase();
-  return AUTHORS[key] || null;
-}
+    mvphunter: {
+      id: "mvphunter",
+      name: "MVP Hunter",
+      avatar: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=240&h=240&fit=crop",
+      tagline: "Ragnarok Veteran & Guide Writer",
+      bios: [
+        "A seasoned adventurer with over a decade of experience exploring Midgard. Specializing in MVP hunting strategies, War of Emperium tactics, and comprehensive job class guides.",
+        "When not conquering dungeons, I help new players master game mechanics and build their legendary characters in the Rune-Midgarts Kingdom.",
+      ],
+    },
+    gamemaster: {
+      id: "gamemaster",
+      name: "Game Master",
+      avatar: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=240&h=240&fit=crop",
+      tagline: "Ragnarok Online Expert",
+      bios: [
+        "Veteran player and community guide creator focused on helping adventurers navigate the world of Ragnarok Online.",
+        "Passionate about sharing knowledge on builds, quests, and strategies for all skill levels.",
+      ],
+    },
+  };
+  
+  export const DEFAULT_AUTHOR = AUTHORS.mvphunter;
+  
+  export function getAuthorById(id) {
+    return AUTHORS[id] || DEFAULT_AUTHOR;
+  }
