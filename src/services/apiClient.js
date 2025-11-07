@@ -32,6 +32,25 @@ apiClient.interceptors.request.use(
   }
 );
 
+// Helper function to check if current route is public
+const isPublicRoute = (pathname) => {
+  const publicRoutes = [
+    '/',
+    '/login',
+    '/signup',
+    '/post/',
+    '/users/',
+  ];
+  
+  // Check if pathname matches any public route pattern
+  return publicRoutes.some(route => {
+    if (route.endsWith('/')) {
+      return pathname.startsWith(route);
+    }
+    return pathname === route;
+  });
+};
+
 // Response interceptor - Handle common errors
 apiClient.interceptors.response.use(
   (response) => response,
@@ -40,7 +59,13 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      
+      // Only redirect to login if we're on a protected route
+      // Don't redirect if we're already on a public route
+      const currentPath = window.location.pathname;
+      if (!isPublicRoute(currentPath)) {
+        window.location.href = '/login';
+      }
       return Promise.reject(error);
     }
 
